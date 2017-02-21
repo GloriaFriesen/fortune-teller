@@ -1,16 +1,24 @@
 $(document).ready(function(){
-  $("form#transportation_survey").submit(function(event){
+  $("form#luckGetter").submit(function(event){
       event.preventDefault();
-      $("#work-responses").show();
-      $("input:checkbox[name=work-transportation]:checked").each(function(){
-        var workTransportationMode = $(this).val();
-        $('#work-responses').append(workTransportationMode + "<br>");
+      $("#fortune").show();
+
+      var score = 0;
+
+      $("input:checkbox[name=bad-luck]:checked").each(function(){
+        score = score - toInt($(this).val());
       });
-      $("#fun-responses").show();
-    $("input:checkbox[name=fun-transportation]:checked").each(function(){
-      var funTransportationMode = $(this).val();
-      $('#fun-responses').append(funTransportationMode + "<br>");
-    });
-      $('#transportation_survey').hide();
+      $("input:checkbox[name=good-luck]:checked").each(function(){
+        score = score + toInt($(this).val());
+      });
+
+      if (score <= 0) {
+        $("#fortune").append("<h3>You will see a scary clown today.</h3>");
+      } else if ((score > 0) && (score < 5)) {
+        $("#fortune").append("<h3>You will walk through downtown for five whole blocks without being asked for money or a cigarette.</h3>");
+      } else {
+        $("#fortune").append("<h3>You will find twenty dollars on the ground.</h3>");
+      }
+      $('#luckGetter').hide();
   });
 });
